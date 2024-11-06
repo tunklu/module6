@@ -1,12 +1,17 @@
+import unicodedata
+def normalize_caseless(text):
+    return unicodedata.normalize("NFKD", text.casefold())
+
+
 class Vehicle:
 
-    def __init__(self, owner, __model, __engine_power, __color):
+    def __init__(self, owner, __model, __color, __engine_power):
         self.owner = owner
         self.__model = __model
         self.__engine_power = __engine_power
         self.__color = __color
 
-    __COLOR_VARIANTS={'brown', 'white', 'silver'}
+    __COLOR_VARIANTS={'black','brown', 'white', 'silver'}
 
     def get_model(self):
         print(f"Модель: {self.__model}")
@@ -24,7 +29,7 @@ class Vehicle:
         print(f"Владелец: {self.owner}")
 
     def set_color(self, new_color):
-        if new_color in self.__COLOR_VARIANTS:
+        if normalize_caseless(new_color) in self.__COLOR_VARIANTS:
             self.__color = new_color
         else:
             print(f"Нельзя сменить цвет на {new_color}")
